@@ -10,10 +10,10 @@ const serviceSchema = mongoose.Schema({
     enum: ["Car Services", "Denting Painting", "Mechanical Repairs", "Car AC Services","Car Cleaning"], 
     required: true,
     },
-    Variant: {
+     variant: { 
     type: String,
-    enum: ["Petrol", "Diesel", "CNG"], 
-    required: true,
+    enum: ["Petrol", "Diesel", "CNG"],
+    required: true,  // ✅ this links to vehicle variant
     },
     Image : {type: String,default: "no-pic.jpg"},
     price: { type: Number, required: true },
