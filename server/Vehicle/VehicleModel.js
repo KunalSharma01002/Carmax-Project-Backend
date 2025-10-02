@@ -1,17 +1,21 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const vehicleSchema = mongoose.Schema({
-    vehicleId: { type:Number, default: 0 },
-    brandId: { type: mongoose.Schema.Types.ObjectId, ref:"brandModel", default: null,required: true },
-    vehicleName: { type: String, default: "" },
-    vehicleType: {
+  vehicleId: { type: Number, default: 0 },
+  brandId: { type: mongoose.Schema.Types.ObjectId, ref: "brandModel", required: true },
+  vehicleName: { type: String, default: "" },
+  vehicleType: {
     type: String,
-    enum: ["SUV", "Sedan", "Hatchback", "MPVs","Van","Electric"], 
+    enum: ["SUV", "Sedan", "Hatchback", "MPVs", "Van", "Electric"],
     required: true,
   },
-    Image : {type: String,default: "no-pic.jpg"},
-    status: { type:Boolean , default: true},
-    createdAt: { type: Date, default: Date.now() }
-})
- 
-module.exports = new mongoose.model('vehicleModel',vehicleSchema)
+  Variant: [{
+    type: String,
+    enum: ["Petrol", "Diesel", "CNG"]
+  }],
+  Image: { type: String, default: "no-pic.jpg" },
+  status: { type: Boolean, default: true },
+  createdAt: { type: Date, default: Date.now() }
+});
+
+module.exports = mongoose.model("vehicleModel", vehicleSchema);

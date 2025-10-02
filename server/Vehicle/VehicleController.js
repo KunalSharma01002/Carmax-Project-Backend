@@ -1,18 +1,14 @@
-const vehicleModel=require("./VehicleModel")
+const vehicleModel = require("./VehicleModel");
+
 addVehicle = async (req, res) => {
   let validation = [];
-  if (!req.body.brandId) {
-    validation.push("Brand Id is required");
-  }
-  if (!req.body.vehicleName) {
-    validation.push("Vehicle name is required!");
-  }
-  if (!req.body.vehicleType) {
-    validation.push("Vehicle type is required!");
-  }
-  if (!req.file) {
-    validation.push("Image is required!");
-  }
+
+  if (!req.body.brandId) validation.push("Brand Id is required!");
+  if (!req.body.vehicleName) validation.push("Vehicle name is required!");
+  if (!req.body.vehicleType) validation.push("Vehicle type is required!");
+  if (!req.body.Variant || req.body.Variant.length === 0)
+    validation.push("At least one Variant is required!");
+  if (!req.file) validation.push("Image is required!");
 
   if (validation.length > 0) {
     return res.json({
@@ -30,6 +26,7 @@ addVehicle = async (req, res) => {
     vehicleObj.brandId = req.body.brandId;
     vehicleObj.vehicleName = req.body.vehicleName;
     vehicleObj.vehicleType = req.body.vehicleType;
+    vehicleObj.Variant = req.body.Variant; // ✅ array from frontend
     vehicleObj.Image = "vehicleImage/" + req.file.filename;
 
     let vehicleData = await vehicleObj.save();
@@ -53,6 +50,7 @@ addVehicle = async (req, res) => {
 
 
 
+
 allVehicle = async (req, res) => {
   try {
     let { currentPage = 0, limit = 0, vehicleType, brandId } = req.body; // ✅ get brandId
@@ -67,7 +65,7 @@ allVehicle = async (req, res) => {
     if (brandId && brandId !== "") {
       filter.brandId = brandId;
     }
-
+    
     let total = await vehicleModel.countDocuments(filter);
 
     let data = await vehicleModel
