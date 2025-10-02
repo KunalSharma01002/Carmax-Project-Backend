@@ -18,9 +18,7 @@ addService=(req,res)=>{
     if(!req.body.serviceCategory){
         validation.push("Service Category is Required!")
       }
-      if(!req.body.Variant){
-        validation.push("Select Variant is Required!")
-      }
+  
     if(!req.body.price){
         validation.push("Price is Required!")
       }
@@ -51,7 +49,7 @@ addService=(req,res)=>{
                 serviceObj.description=req.body.description;
                 serviceObj.serviceCategory=req.body.serviceCategory;
                 serviceObj.price=Number(req.body.price);
-                serviceObj.Variant=req.body.Variant;
+              
                 serviceObj.additionalInformation=req.body.additionalInformation;
                 serviceObj.Image="serviceImage/"+req.file.filename;
                 serviceObj.save()
@@ -96,7 +94,7 @@ allService = async (req, res) => {
     if (serviceName) filter.serviceName = serviceName;
     if (status !== undefined) filter.status = status;
     if (vehicleId) filter.vehicleId = vehicleId;  
-    if (Variant) filter.Variant = Variant; 
+   
 
     limit = parseInt(limit) || 0;
     currentPage = parseInt(currentPage) || 0;
